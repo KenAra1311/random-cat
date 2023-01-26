@@ -7,7 +7,7 @@ type Props = {
   title?: string
 }
 
-const Layout = ({ children, title }: Props) => (
+const Layout: React.FC<Props> = ({ children, title }: Props) => (
   <div>
     <Head>
       <title>ねこ祭り🐱 | {title}</title>
@@ -16,7 +16,8 @@ const Layout = ({ children, title }: Props) => (
     </Head>
     <header>
       <nav>
-        <Link href="/">Home</Link> | <Link href="/about">About</Link> |{' '}
+        <Link href="/">Home</Link> |{' '}
+        <Link href="/about">About</Link> |{' '}
         <Link href="/users">Users List</Link> |{' '}
         <a href="/api/users">Users API</a>
       </nav>

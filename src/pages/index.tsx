@@ -2,7 +2,7 @@ import Layout from 'components/Layout'
 import { Suspense, useEffect, useState } from 'react'
 import { fetchCatImage } from 'utils/index'
 
-const IndexPage = () =>{
+const IndexPage: React.FC = () =>{
   const [catImage, setCatImage] = useState<string>('')
 
   useEffect(() => {
