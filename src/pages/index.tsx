@@ -1,9 +1,13 @@
 import Layout from 'components/Layout'
-import { Suspense, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { fetchCatImage } from 'utils/index'
 
 const IndexPage = () =>{
-  const [catImage, setCatImage] = useState<string>("https://cdn2.thecatapi.com/images/bpc.jpg")
+  const [catImage, setCatImage] = useState<string>('')
+
+  useEffect(() => {
+    fetchCatImage(setCatImage)
+  }, [])
 
   const randomCatImage = () => fetchCatImage(setCatImage)
 
