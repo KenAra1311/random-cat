@@ -13,6 +13,7 @@ const LoginPage: React.FC = () => {
     <Auth
       supabaseClient={supabase}
       appearance={{ theme: ThemeSupa }}
+      localization={{ lang: 'ja' }}
       theme="dark"
     />
   )
