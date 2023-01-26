@@ -1,10 +1,6 @@
-const CAT_STRINGS = [
-  'bpc',
-  'eac',
-  '6qi',
-]
+export const fetchCatImage = async (setCatImage:any): Promise<void> => {
+  const res = await fetch("https://api.thecatapi.com/v1/images/search")
+  const result = await res.json()
 
-export const randomCatImage = (): string => {
-  const index = Math.floor(Math.random() * CAT_STRINGS.length);
-  return CAT_STRINGS[index];
+  setCatImage(result[0].url)
 }
