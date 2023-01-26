@@ -8,3 +8,10 @@ export type User = {
   id: number
   name: string
 }
+
+export type CatImage = {
+  id: number
+  url: string
+  width: number
+  height: number
+}
