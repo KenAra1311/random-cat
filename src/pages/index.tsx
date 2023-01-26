@@ -1,12 +1,9 @@
 import Layout from 'components/Layout'
-import Link from 'next/link'
 
 const IndexPage = () => (
   <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">About</Link>
-    </p>
+    <h1>ねこ祭り🐱</h1>
+    <img src="https://cdn2.thecatapi.com/images/bpc.jpg" />
   </Layout>
 )
 
