@@ -8,7 +8,7 @@ const IndexPage = () =>{
   const randomCatImage = () => fetchCatImage(setCatImage)
 
   return (
-    <Layout title="Home | Next.js + TypeScript Example">
+    <Layout title="Home">
       <h1>ねこ祭り🐱</h1>
 
       <Suspense fallback={<div>Loading...</div>}>
