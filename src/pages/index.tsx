@@ -1,8 +1,12 @@
+import { useSession } from '@supabase/auth-helpers-react'
 import Layout from 'components/Layout'
+import Link from 'next/link'
 import { Suspense, useEffect, useState } from 'react'
 import { fetchCatImage } from 'utils/index'
 
 const IndexPage: React.FC = () =>{
+  const session = useSession()
+
   const [catImage, setCatImage] = useState<string>('')
 
   useEffect(() => {
@@ -23,6 +27,17 @@ const IndexPage: React.FC = () =>{
           <img src={catImage} width={500} height='auto' />
         </div>
       </Suspense>
+
+      {session ? (
+        <div>
+          <button>お気に入り登録⭐️</button>
+        </div>
+      ) : (
+        <div>
+          アカウントを作成したら、お気に入り登録できます😄<br />
+          <Link href='/login'>ログイン画面へ</Link>
+        </div>
+      )}
     </Layout>
   )
 }
