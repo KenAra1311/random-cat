@@ -3,7 +3,7 @@ import { AuthForm } from 'interfaces/auth_form'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { login } from 'utils/auth'
+import { login, register as registerUser } from 'utils/auth'
 
 const AuthPage: React.FC = () => {
   const router = useRouter()
@@ -17,7 +17,7 @@ const AuthPage: React.FC = () => {
   const title = (isLogin: boolean) =>
     isLogin ? 'ログイン' : 'アカウント登録'
 
-  const onSubmit = (data: AuthForm) => login(data)
+  const onSubmit = (data: AuthForm) => isLogin ? login(data) : registerUser(data)
 
   return (
     <>
