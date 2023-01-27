@@ -4,7 +4,9 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "format": "prettier --check 'src/**/*.{js,jsx,ts,tsx,css,scss,json}'",
+    "format:fix": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,scss,json}'"
   },
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.5.4",
@@ -19,6 +21,10 @@
     "@types/node": "^12.12.21",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
+    "prettier": "^2.8.3",
     "typescript": "^4.8.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css,scss,json}": "prettier --write"
   }
 }

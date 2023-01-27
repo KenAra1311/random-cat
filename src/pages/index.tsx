@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Suspense, useEffect, useState } from 'react'
 import { fetchCatImage } from 'utils/index'
 
-const IndexPage: React.FC = () =>{
+const IndexPage: React.FC = () => {
   const session = useSession()
 
   const [catImage, setCatImage] = useState<string>('')
@@ -25,7 +25,7 @@ const IndexPage: React.FC = () =>{
           <button onClick={randomCatImage}>ねこを入れ替える🐈</button>
         </div>
         <div>
-          <img src={catImage} width={500} height='auto' />
+          <img src={catImage} width={500} height="auto" />
         </div>
       </Suspense>
 
@@ -35,7 +35,8 @@ const IndexPage: React.FC = () =>{
         </div>
       ) : (
         <div>
-          アカウントを作成したら、お気に入り登録できます😄<br />
+          アカウントを作成したら、お気に入り登録できます😄
+          <br />
           <Link href={Routes.AUTH}>ログイン画面へ</Link>
         </div>
       )}
