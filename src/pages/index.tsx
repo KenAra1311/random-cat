@@ -1,4 +1,5 @@
 import { useSession } from '@supabase/auth-helpers-react'
+import { Routes } from 'common/enums'
 import Layout from 'components/Layout'
 import Link from 'next/link'
 import { Suspense, useEffect, useState } from 'react'
@@ -35,7 +36,7 @@ const IndexPage: React.FC = () =>{
       ) : (
         <div>
           アカウントを作成したら、お気に入り登録できます😄<br />
-          <Link href='/login'>ログイン画面へ</Link>
+          <Link href={Routes.AUTH}>ログイン画面へ</Link>
         </div>
       )}
     </Layout>

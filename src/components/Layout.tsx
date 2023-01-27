@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
+import { Routes } from 'common/enums'
 
 type Props = {
   children?: ReactNode
@@ -16,10 +17,8 @@ const Layout: React.FC<Props> = ({ children, title }: Props) => (
     </Head>
     <header>
       <nav>
-        <Link href="/">Home</Link> |{' '}
-        <Link href="/about">About</Link> |{' '}
-        <Link href="/users">Users List</Link> |{' '}
-        <a href="/api/users">Users API</a>
+        <Link href={Routes.ROOT}>Home</Link> |{' '}
+        <Link href={Routes.ABOUT}>About</Link>
       </nav>
     </header>
     {children}
