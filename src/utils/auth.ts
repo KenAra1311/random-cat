@@ -11,6 +11,8 @@ export const authenticate = async (
         email: data.email,
         password: data.password,
       })
+
+      alert('認証用メールを送信しました。\nメールをご確認ください。')
     } else {
       await supabase.auth.signInWithPassword({
         email: data.email,
