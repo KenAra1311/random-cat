@@ -1,15 +1,16 @@
-import React, { ReactNode } from 'react'
-import Link from 'next/link'
-import Head from 'next/head'
 import { Routes } from 'common/enums'
+import { NextPage } from 'next'
+import Head from 'next/head'
+import Link from 'next/link'
+import React, { ReactNode } from 'react'
 
 type Props = {
   children?: ReactNode
   title?: string
 }
 
-const Layout: React.FC<Props> = ({ children, title }: Props) => (
-  <div>
+const Layout: NextPage<Props> = ({ children, title }: Props) => (
+  <>
     <Head>
       <title>ねこ祭り🐱 | {title}</title>
       <meta charSet="utf-8" />
@@ -26,7 +27,7 @@ const Layout: React.FC<Props> = ({ children, title }: Props) => (
       <hr />
       test aramaki
     </footer>
-  </div>
+  </>
 )
 
 export default Layout

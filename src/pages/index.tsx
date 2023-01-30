@@ -1,11 +1,12 @@
 import { useSession } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
 import Layout from 'components/Layout'
+import { NextPage } from 'next'
 import Link from 'next/link'
 import { Suspense, useEffect, useState } from 'react'
 import { fetchCatImage } from 'utils/index'
 
-const IndexPage: React.FC = () => {
+const IndexPage: NextPage= () => {
   const session = useSession()
 
   const [catImage, setCatImage] = useState<string>('')

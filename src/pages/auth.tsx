@@ -1,13 +1,14 @@
-import { useSession } from '@supabase/auth-helpers-react'
+import { useUser } from '@supabase/auth-helpers-react'
 import { AuthForm } from 'interfaces/auth_form'
+import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { authenticate } from 'utils/auth'
 
-const AuthPage: React.FC = () => {
+const AuthPage: NextPage = () => {
   const router = useRouter()
-  const session = useSession()
+  const session = useUser()
   const {
     register,
     handleSubmit,

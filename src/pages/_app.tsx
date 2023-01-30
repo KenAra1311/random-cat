@@ -1,5 +1,6 @@
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
+import { NextPage } from 'next'
 import { useState } from 'react'
 
 type Props = {
@@ -7,7 +8,7 @@ type Props = {
   pageProps?: any
 }
 
-const MyApp: React.FC<Props> = ({ Component, pageProps }: Props) => {
+const App: NextPage<Props> = ({ Component, pageProps }: Props) => {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient())
 
   return (
@@ -20,4 +21,4 @@ const MyApp: React.FC<Props> = ({ Component, pageProps }: Props) => {
   )
 }
 
-export default MyApp
+export default App
