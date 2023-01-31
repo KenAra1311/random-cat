@@ -1,4 +1,5 @@
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
+import { Routes } from 'common/enums'
 import { AuthForm } from 'interfaces/auth_form'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -18,7 +19,7 @@ const AuthPage: NextPage = () => {
 
   const [isLogin, setIsLogin] = useState<boolean>(true)
 
-  if (user) router.replace('/')
+  if (user) router.replace(Routes.ROOT)
 
   const onSubmit = (data: AuthForm) =>
     authenticate(supabaseClient, data, isLogin)

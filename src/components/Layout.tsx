@@ -1,4 +1,4 @@
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
 import { NextPage } from 'next'
 import Head from 'next/head'
@@ -13,7 +13,7 @@ type Props = {
 
 const Layout: NextPage<Props> = ({ children, title }: Props) => {
   const supabaseClient = useSupabaseClient()
-  const session = useSession()
+  const user = useUser()
 
   const logout = () => logoutUser(supabaseClient)
 
@@ -28,10 +28,11 @@ const Layout: NextPage<Props> = ({ children, title }: Props) => {
         <nav>
           <Link href={Routes.ROOT}>Home</Link> |{' '}
           <Link href={Routes.ABOUT}>About</Link>
-          {session && (
+          {user && (
             <>
               {' '}
-              | <button onClick={logout}>ログアウト</button>
+              | <Link href={Routes.SETTING}>設定</Link> |{' '}
+              <button onClick={logout}>ログアウト</button>
             </>
           )}
         </nav>

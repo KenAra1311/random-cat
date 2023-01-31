@@ -1,4 +1,4 @@
-import { useSession } from '@supabase/auth-helpers-react'
+import { useUser } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
 import Layout from 'components/Layout'
 import { NextPage } from 'next'
@@ -6,8 +6,8 @@ import Link from 'next/link'
 import { Suspense, useEffect, useState } from 'react'
 import { fetchCatImage } from 'utils/index'
 
-const IndexPage: NextPage= () => {
-  const session = useSession()
+const IndexPage: NextPage = () => {
+  const user = useUser()
 
   const [catImage, setCatImage] = useState<string>('')
 
@@ -30,7 +30,7 @@ const IndexPage: NextPage= () => {
         </div>
       </Suspense>
 
-      {session ? (
+      {user ? (
         <div>
           <button>お気に入り登録⭐️</button>
         </div>
