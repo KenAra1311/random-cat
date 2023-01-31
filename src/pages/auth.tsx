@@ -1,14 +1,15 @@
-import { useUser } from '@supabase/auth-helpers-react'
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { AuthForm } from 'interfaces/auth_form'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { authenticate } from 'utils/auth'
+import { authenticate, title } from 'utils/auth'
 
 const AuthPage: NextPage = () => {
+  const supabaseClient = useSupabaseClient()
+  const user = useUser()
   const router = useRouter()
-  const session = useUser()
   const {
     register,
     handleSubmit,
@@ -17,11 +18,10 @@ const AuthPage: NextPage = () => {
 
   const [isLogin, setIsLogin] = useState<boolean>(true)
 
-  if (session) router.replace('/')
+  if (user) router.replace('/')
 
-  const title = (isLogin: boolean) => (isLogin ? 'ログイン' : 'アカウント登録')
-
-  const onSubmit = (data: AuthForm) => authenticate(data, isLogin)
+  const onSubmit = (data: AuthForm) =>
+    authenticate(supabaseClient, data, isLogin)
 
   return (
     <>
