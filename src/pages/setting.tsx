@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { Suspense, useEffect, useState } from 'react'
 import { fetchProfile } from 'utils/setting'
 
-const IndexPage: NextPage = () => {
+const SettingPage: NextPage = () => {
   const supabase = useSupabaseClient()
   const user = useUser()
   const router = useRouter()
@@ -72,4 +72,4 @@ const IndexPage: NextPage = () => {
   )
 }
 
-export default IndexPage
+export default SettingPage
