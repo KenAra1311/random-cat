@@ -1,10 +1,10 @@
 export type Profile = {
   id: string
-  created_at: Date
-  updated_at: Date
+  created_at: string | null
+  updated_at: string | null
   email: string
-  username: string
-  full_name: string
-  avatar_url: string
-  website: string
+  username: string | null
+  full_name: string | null
+  avatar_url: string | null
+  website: string | null
 }

@@ -1,5 +1,6 @@
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
+import { formatDate } from 'common/time'
 import Layout from 'components/Layout'
 import { Profile } from 'interfaces/profile'
 import { NextPage } from 'next'
@@ -54,6 +55,16 @@ const IndexPage: NextPage = () => {
             ) : (
               <>画像なし</>
             )}
+          </div>
+          <div>
+            <label>登録日時</label>
+            <br />
+            <input type="text" defaultValue={formatDate(profile.created_at)} />
+          </div>
+          <div>
+            <label>更新日時</label>
+            <br />
+            <input type="text" defaultValue={formatDate(profile.updated_at)} />
           </div>
         </div>
       </Suspense>
