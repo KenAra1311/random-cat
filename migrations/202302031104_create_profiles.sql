@@ -3,6 +3,7 @@ create table profiles (
   id uuid references auth.users not null primary key,
   created_at timestamp with time zone,
   updated_at timestamp with time zone,
+  email text,
   username text unique,
   full_name text,
   avatar_url text,
@@ -29,8 +30,8 @@ create policy "Users can update own profile." on profiles
 create function public.handle_new_user()
 returns trigger as $$
 begin
-  insert into public.profiles (id, full_name, avatar_url)
-  values (new.id, new.email, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url');
+  insert into public.profiles (id, email)
+  values (new.id, new.email);
   return new;
 end;
 $$ language plpgsql security definer;
