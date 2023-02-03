@@ -1,17 +1,14 @@
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
-import { Routes } from 'common/enums'
 import { formatDate } from 'common/time'
 import Layout from 'components/Layout'
 import { Profile } from 'interfaces/profile'
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
 import { Suspense, useEffect, useState } from 'react'
 import { fetchProfile } from 'utils/account'
 
 const AccountPage: NextPage = () => {
   const supabase = useSupabaseClient()
   const user = useUser()
-  const router = useRouter()
 
   const [profile, setProfile] = useState<Profile>({} as Profile)
 
@@ -19,7 +16,7 @@ const AccountPage: NextPage = () => {
     fetchProfile(supabase, user, setProfile)
   }, [supabase, user])
 
-  if (!user) router.replace(Routes.AUTH)
+  if (!user) return <></>
 
   return (
     <Layout title="アカウント情報">
