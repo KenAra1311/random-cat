@@ -6,9 +6,9 @@ import { Profile } from 'interfaces/profile'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { Suspense, useEffect, useState } from 'react'
-import { fetchProfile } from 'utils/setting'
+import { fetchProfile } from 'utils/account'
 
-const SettingPage: NextPage = () => {
+const AccountPage: NextPage = () => {
   const supabase = useSupabaseClient()
   const user = useUser()
   const router = useRouter()
@@ -72,4 +72,4 @@ const SettingPage: NextPage = () => {
   )
 }
 
-export default SettingPage
+export default AccountPage

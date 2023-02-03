@@ -31,7 +31,7 @@ const Layout: NextPage<Props> = ({ children, title }: Props) => {
           {user && (
             <>
               {' '}
-              | <Link href={Routes.SETTING}>設定</Link> |{' '}
+              | <Link href={Routes.ACCOUNT}>設定</Link> |{' '}
               <button onClick={logout}>ログアウト</button>
             </>
           )}
