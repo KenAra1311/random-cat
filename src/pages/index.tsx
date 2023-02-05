@@ -1,12 +1,13 @@
-import { useUser } from '@supabase/auth-helpers-react'
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
 import Layout from 'components/Layout'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { Suspense, useEffect, useState } from 'react'
-import { fetchCatImage } from 'utils/index'
+import { createFavorite, fetchCatImage } from 'utils/index'
 
 const IndexPage: NextPage = () => {
+  const supabase = useSupabaseClient()
   const user = useUser()
 
   const [catImage, setCatImage] = useState<string>('')
@@ -16,6 +17,8 @@ const IndexPage: NextPage = () => {
   }, [])
 
   const randomCatImage = () => fetchCatImage(setCatImage)
+
+  const favorite = () => createFavorite(supabase, user, catImage)
 
   return (
     <Layout title="Home">
@@ -32,7 +35,7 @@ const IndexPage: NextPage = () => {
 
       {user ? (
         <div>
-          <button>お気に入り登録⭐️</button>
+          <button onClick={favorite}>お気に入り登録⭐️</button>
         </div>
       ) : (
         <div>
