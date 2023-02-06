@@ -23,3 +23,15 @@ export const create = async (
 
   if (error && status !== 406) throw error
 }
+
+export const remove = async (
+  supabase: SupabaseClient<any, 'public', any>,
+  id: string
+): Promise<void> => {
+  const { error, status } = await supabase
+    .from('favorites')
+    .delete()
+    .match({ id })
+
+  if (error && status !== 406) throw error
+}
