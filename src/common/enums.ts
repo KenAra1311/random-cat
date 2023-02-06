@@ -3,4 +3,5 @@ export enum Routes {
   AUTH = '/auth',
   ABOUT = '/about',
   ACCOUNT = '/account',
+  FAVORITES = '/favorites',
 }
