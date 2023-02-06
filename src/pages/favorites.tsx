@@ -17,13 +17,20 @@ const AccountPage: NextPage = () => {
 
   if (!user) return <></>
 
-  console.log(favorites)
-
   return (
     <Layout title="お気に入り一覧">
       <h1>お気に入り一覧</h1>
 
-      <Suspense fallback={<div>Loading...</div>}></Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        {favorites.map((f, i) => (
+          <>
+            <div>
+              <img src={f.url} alt={`favorite_cat_image_${i}`} />
+            </div>
+            <hr />
+          </>
+        ))}
+      </Suspense>
     </Layout>
   )
 }
