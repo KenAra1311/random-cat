@@ -3,6 +3,7 @@ import Layout from 'components/Layout'
 import { Favorite } from 'interfaces/favorite'
 import { NextPage } from 'next'
 import { Suspense, useEffect, useState } from 'react'
+import { fetchFavorites } from 'utils/favorites'
 
 const AccountPage: NextPage = () => {
   const supabase = useSupabaseClient()
@@ -10,9 +11,13 @@ const AccountPage: NextPage = () => {
 
   const [favorites, setFavorites] = useState<Favorite[]>([])
 
-  useEffect(() => {}, [supabase, user])
+  useEffect(() => {
+    fetchFavorites(supabase, user, setFavorites)
+  }, [supabase, user])
 
   if (!user) return <></>
+
+  console.log(favorites)
 
   return (
     <Layout title="お気に入り一覧">
