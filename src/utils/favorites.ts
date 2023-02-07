@@ -1,5 +1,4 @@
 import { SupabaseClient, User } from '@supabase/supabase-js'
-import { Routes } from 'common/enums'
 import { Favorite } from 'interfaces/favorite'
 import { NextRouter } from 'next/router'
 import { Dispatch, SetStateAction } from 'react'
@@ -13,9 +12,9 @@ export const fetchFavorites = async (
   user: User,
   setFavorites: Dispatch<SetStateAction<Favorite[]>>
 ): Promise<void> => {
-  try {
-    if (!user) throw new Error('認証が正しくできてないようです。')
+  if (!user) return
 
+  try {
     setFavorites(await fetchFavoritesRecord(supabase, user))
   } catch (error) {
     alert(error.error_description || error.message)
@@ -26,7 +25,7 @@ export const fetchFavorites = async (
 export const removeFavorite = async (
   supabase: SupabaseClient<any, 'public', any>,
   user: User,
-  { replace }: NextRouter,
+  { reload }: NextRouter,
   id: string
 ): Promise<void> => {
   try {
@@ -36,7 +35,7 @@ export const removeFavorite = async (
     await removeFavoriteRecord(supabase, id)
 
     alert('このねこ画像のお気に入りを削除しました😹')
-    replace(Routes.FAVORITES)
+    reload()
   } catch (error) {
     alert(error.error_description || error.message)
     console.log(error)
