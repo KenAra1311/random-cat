@@ -2,7 +2,7 @@ import { SupabaseClient, User } from '@supabase/supabase-js'
 import { Profile } from 'interfaces/profile'
 import { Dispatch, SetStateAction } from 'react'
 import { UseFormSetValue } from 'react-hook-form'
-import { fetchMe } from 'repositories/supabase_profile'
+import { fetchMe, update } from 'repositories/supabase_profile'
 
 export const fetchProfile = async (
   supabase: SupabaseClient<any, 'public', any>,
@@ -23,6 +23,21 @@ export const fetchProfile = async (
     setValue('username', profile.username)
     setValue('website', profile.website)
     setValue('avatar_url', profile.avatar_url)
+  } catch (error) {
+    alert(error.error_description || error.message)
+    console.log(error)
+  }
+}
+
+export const updateProfile = async (
+  supabase: SupabaseClient<any, 'public', any>,
+  user: User,
+  data: Profile
+) => {
+  try {
+    await update(supabase, user, data)
+
+    alert('アカウント情報の更新が完了しました😺')
   } catch (error) {
     alert(error.error_description || error.message)
     console.log(error)

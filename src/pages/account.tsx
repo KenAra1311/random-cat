@@ -5,7 +5,7 @@ import { Profile } from 'interfaces/profile'
 import { NextPage } from 'next'
 import { Suspense, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { fetchProfile } from 'utils/account'
+import { fetchProfile, updateProfile } from 'utils/account'
 
 const AccountPage: NextPage = () => {
   const supabase = useSupabaseClient()
@@ -20,7 +20,7 @@ const AccountPage: NextPage = () => {
 
   if (!user) return <></>
 
-  const save = (data: Profile) => console.log({ data })
+  const save = (data: Profile) => updateProfile(supabase, user, data)
 
   return (
     <Layout title="アカウント情報">
