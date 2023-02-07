@@ -27,7 +27,7 @@ const AccountPage: NextPage = () => {
           <div>
             <label>ID</label>
             <br />
-            <input type="text" disabled defaultValue={profile.id} />
+            <div>{profile.id}</div>
           </div>
           <div>
             <label>メールアドレス</label>
@@ -56,12 +56,16 @@ const AccountPage: NextPage = () => {
           <div>
             <label>登録日時</label>
             <br />
-            <input type="text" defaultValue={formatDate(profile.created_at)} />
+            <div>{formatDate(profile.created_at)}</div>
           </div>
           <div>
             <label>更新日時</label>
             <br />
-            <input type="text" defaultValue={formatDate(profile.updated_at)} />
+            <div>
+              {profile.updated_at
+                ? formatDate(profile.updated_at)
+                : 'データなし'}
+            </div>
           </div>
         </div>
       </Suspense>
