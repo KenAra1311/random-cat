@@ -4,26 +4,30 @@ import Layout from 'components/Layout'
 import { Profile } from 'interfaces/profile'
 import { NextPage } from 'next'
 import { Suspense, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { fetchProfile } from 'utils/account'
 
 const AccountPage: NextPage = () => {
   const supabase = useSupabaseClient()
   const user = useUser()
+  const { register, handleSubmit, setValue } = useForm<Profile>()
 
   const [profile, setProfile] = useState<Profile>({} as Profile)
 
   useEffect(() => {
-    fetchProfile(supabase, user, setProfile)
+    fetchProfile(supabase, user, setProfile, setValue)
   }, [supabase, user])
 
   if (!user) return <></>
+
+  const save = (data: Profile) => console.log({ data })
 
   return (
     <Layout title="アカウント情報">
       <h1>アカウント情報</h1>
 
       <Suspense fallback={<div>Loading...</div>}>
-        <div>
+        <form onSubmit={handleSubmit(save)}>
           <div>
             <label>ID</label>
             <br />
@@ -32,17 +36,17 @@ const AccountPage: NextPage = () => {
           <div>
             <label>メールアドレス</label>
             <br />
-            <input type="email" defaultValue={profile.email} />
+            <div>{profile.email}</div>
           </div>
           <div>
             <label>名前</label>
             <br />
-            <input type="text" defaultValue={profile.username} />
+            <input type="text" {...register('username')} />
           </div>
           <div>
             <label>Webサイト</label>
             <br />
-            <input type="text" defaultValue={profile.website} />
+            <input type="text" {...register('website')} />
           </div>
           <div>
             <label>アバター</label>
@@ -67,7 +71,10 @@ const AccountPage: NextPage = () => {
                 : 'データなし'}
             </div>
           </div>
-        </div>
+          <div>
+            <button type="submit">更新</button>
+          </div>
+        </form>
       </Suspense>
     </Layout>
   )

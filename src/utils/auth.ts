@@ -1,5 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js'
+import { Routes } from 'common/enums'
 import { AuthForm } from 'interfaces/auth_form'
+import { NextRouter } from 'next/router'
 
 export const title = (isLogin: boolean) =>
   isLogin ? 'ログイン' : 'アカウント登録'
@@ -27,13 +29,17 @@ export const authenticate = async (
   }
 }
 
-export const logout = async ({ auth }: SupabaseClient<any, 'public', any>) => {
+export const logout = async (
+  { auth }: SupabaseClient<any, 'public', any>,
+  { replace }: NextRouter
+) => {
   try {
     if (confirm('ログアウトしますか？')) {
       const { error } = await auth.signOut()
       if (error) throw error
 
       alert('ログアウトしました。')
+      replace(Routes.ROOT)
     }
   } catch (error) {
     alert(error.error_description || error.message)

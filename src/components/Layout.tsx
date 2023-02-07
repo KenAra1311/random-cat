@@ -3,6 +3,7 @@ import { Routes } from 'common/enums'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import { logout as logoutUser } from 'utils/auth'
 
@@ -14,8 +15,9 @@ type Props = {
 const Layout: NextPage<Props> = ({ children, title }: Props) => {
   const supabaseClient = useSupabaseClient()
   const user = useUser()
+  const router = useRouter()
 
-  const logout = () => logoutUser(supabaseClient)
+  const logout = () => logoutUser(supabaseClient, router)
 
   return (
     <>
