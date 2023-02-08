@@ -1,3 +1,17 @@
+# DB のマイグレーション手順
+
+前提
+
+- ローカルで立ち上げている Supabase 環境で実施する
+
+1. Supabase ダッシュボード「SQL Editor」にて、テーブル追加・変更・削除の SQL を記述し、実行
+2. プロジェクトにて、`❯ supabase db diff --file [file_name]`を実行
+3. 2 が完了すると、`supabase/migrations`配下に SQL ファイルが生成される
+4. テーブルの追加・変更・削除によって DB に何かしら変化が起きた場合、以下を実行しプロジェクトと Supabase の型を紐付けておく
+   `❯ supabase gen types typescript --local > src/interfaces/database.types.ts`
+5. テーブルの追加・削除においては、以下の型定義ファイルも変更しておく必要があるので、必要に応じ型を呼び出す型を定義または削除しておく
+   `src/interfaces/table.ts`
+
 # TypeScript Next.js example
 
 This is a really simple project that shows the usage of Next.js with TypeScript.
