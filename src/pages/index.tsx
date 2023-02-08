@@ -1,13 +1,14 @@
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
 import Layout from 'components/Layout'
+import { Database } from 'interfaces/database.types'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { Suspense, useEffect, useState } from 'react'
 import { createFavorite, fetchCatImage } from 'utils/index'
 
 const IndexPage: NextPage = () => {
-  const supabase = useSupabaseClient()
+  const supabase = useSupabaseClient<Database>()
   const user = useUser()
 
   const [catImage, setCatImage] = useState<string>('')

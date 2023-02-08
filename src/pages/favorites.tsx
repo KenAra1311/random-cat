@@ -1,6 +1,6 @@
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import Layout from 'components/Layout'
-import { Favorite } from 'interfaces/favorite'
+import { Favorite } from 'interfaces/table'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { Suspense, useEffect, useState } from 'react'

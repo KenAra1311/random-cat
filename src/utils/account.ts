@@ -1,5 +1,5 @@
 import { SupabaseClient, User } from '@supabase/supabase-js'
-import { Profile } from 'interfaces/profile'
+import { Profile } from 'interfaces/table'
 import { Dispatch, SetStateAction } from 'react'
 import { UseFormSetValue } from 'react-hook-form'
 import { fetchMe, update } from 'repositories/supabase_profile'

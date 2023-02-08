@@ -1,7 +1,7 @@
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { formatDate } from 'common/time'
 import Layout from 'components/Layout'
-import { Profile } from 'interfaces/profile'
+import { Profile } from 'interfaces/table'
 import { NextPage } from 'next'
 import { Suspense, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'

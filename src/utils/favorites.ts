@@ -1,5 +1,5 @@
 import { SupabaseClient, User } from '@supabase/supabase-js'
-import { Favorite } from 'interfaces/favorite'
+import { Favorite } from 'interfaces/table'
 import { NextRouter } from 'next/router'
 import { Dispatch, SetStateAction } from 'react'
 import {

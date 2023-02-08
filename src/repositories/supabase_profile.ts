@@ -1,5 +1,5 @@
 import { SupabaseClient, User } from '@supabase/supabase-js'
-import { Profile } from 'interfaces/profile'
+import { Profile } from 'interfaces/table'
 
 export const fetchMe = async (
   supabase: SupabaseClient<any, 'public', any>,
