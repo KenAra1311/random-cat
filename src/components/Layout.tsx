@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+import { Button, Container } from '@mui/material'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
 import { NextPage } from 'next'
@@ -21,7 +21,7 @@ const Layout: NextPage<Props> = ({ children, title }: Props) => {
   const logout = () => logoutUser(supabaseClient, router)
 
   return (
-    <>
+    <Container maxWidth="sm">
       <Head>
         <title>ねこ祭り🐱 | {title}</title>
         <meta charSet="utf-8" />
@@ -29,8 +29,7 @@ const Layout: NextPage<Props> = ({ children, title }: Props) => {
       </Head>
       <header>
         <nav>
-          <Link href={Routes.ROOT}>Home</Link> |{' '}
-          <Link href={Routes.ABOUT}>About</Link>
+          <Link href={Routes.ROOT}>Home</Link>
           {user && (
             <>
               {' '}
@@ -48,7 +47,7 @@ const Layout: NextPage<Props> = ({ children, title }: Props) => {
         <hr />
         test aramaki
       </footer>
-    </>
+    </Container>
   )
 }
 

@@ -37,7 +37,7 @@ const IndexPage: NextPage = () => {
           </Button>
         </div>
         <div>
-          <img src={catImage} width={500} height="auto" />
+          <img src={catImage} width="100%" />
         </div>
       </Suspense>
 

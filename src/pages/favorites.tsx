@@ -30,7 +30,7 @@ const AccountPage: NextPage = () => {
         {favorites.map((f, i) => (
           <>
             <div>
-              <img src={f.url} alt={`favorite_cat_image_${i}`} />
+              <img src={f.url} alt={`favorite_cat_image_${i}`} width="100%" />
               <Button
                 onClick={() => remove(f.id)}
                 variant="contained"
