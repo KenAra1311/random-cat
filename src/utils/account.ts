@@ -3,20 +3,23 @@ import { Profile } from 'interfaces/table'
 import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { UseFormSetValue } from 'react-hook-form'
 import { fetchMe, update } from 'repositories/supabase/db_profile'
-import { upload } from 'repositories/supabase/storage_profile'
+import { download, upload } from 'repositories/supabase/storage_avatar'
 
 export const fetchProfile = async (
   supabase: SupabaseClient<any, 'public', any>,
   user: User,
   setProfile: Dispatch<SetStateAction<Profile>>,
+  setAvatar: Dispatch<SetStateAction<string>>,
   setValue: UseFormSetValue<Profile>
 ): Promise<void> => {
   if (!user) return
 
   try {
     const profile = await fetchMe(supabase, user)
+    const avatarUrl = await download(supabase, profile.avatar_url)
 
     setProfile(profile)
+    setAvatar(avatarUrl)
     setValue('id', profile.id)
     setValue('created_at', profile.created_at)
     setValue('updated_at', profile.updated_at)

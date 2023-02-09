@@ -5,6 +5,17 @@ import { ChangeEvent } from 'react'
 const Avatars = (supabase: SupabaseClient<Database, 'public', any>) =>
   supabase.storage.from('avatars')
 
+export const download = async (
+  supabase: SupabaseClient<Database, 'public', any>,
+  path: string
+): Promise<string> => {
+  const { data, error } = await Avatars(supabase).download(path)
+
+  if (error) throw error
+
+  return URL.createObjectURL(data)
+}
+
 export const upload = async (
   supabase: SupabaseClient<Database, 'public', any>,
   { id }: User,

@@ -13,10 +13,11 @@ const AccountPage: NextPage = () => {
   const { register, handleSubmit, setValue } = useForm<Profile>()
 
   const [profile, setProfile] = useState<Profile>({} as Profile)
+  const [avatar, setAvatar] = useState<string>('')
   const [uploading, setUploading] = useState<boolean>(false)
 
   useEffect(() => {
-    fetchProfile(supabase, user, setProfile, setValue)
+    fetchProfile(supabase, user, setProfile, setAvatar, setValue)
   }, [supabase, user])
 
   if (!user) return <></>
@@ -55,8 +56,13 @@ const AccountPage: NextPage = () => {
           <div>
             <label>アバター</label>
             <br />
-            {profile.avatar_url ? (
-              <img src={profile.avatar_url} alt="profile_avatar_url" />
+            {avatar ? (
+              <img
+                src={avatar}
+                alt="profile_avatar"
+                width={500}
+                height="auto"
+              />
             ) : (
               <>画像なし</>
             )}
