@@ -1,3 +1,4 @@
+import { Avatar, Button } from '@mui/material'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { formatDate } from 'common/time'
 import Layout from 'components/Layout'
@@ -32,6 +33,13 @@ const AccountPage: NextPage = () => {
       <h1>アカウント情報</h1>
 
       <Suspense fallback={<div>Loading...</div>}>
+        {avatar ? (
+          <Avatar src={avatar} alt="profile_avatar" />
+        ) : (
+          <Avatar alt="profile_avatar">
+            {profile.email ? profile.email.slice(0, 1) : ''}
+          </Avatar>
+        )}
         <form onSubmit={handleSubmit(save)}>
           <div>
             <label>ID</label>
@@ -56,17 +64,6 @@ const AccountPage: NextPage = () => {
           <div>
             <label>アバター</label>
             <br />
-            {avatar ? (
-              <img
-                src={avatar}
-                alt="profile_avatar"
-                width={500}
-                height="auto"
-              />
-            ) : (
-              <>画像なし</>
-            )}
-            <br />
             <input
               type="file"
               accept="image/*"
@@ -89,7 +86,9 @@ const AccountPage: NextPage = () => {
             </div>
           </div>
           <div>
-            <button type="submit">更新</button>
+            <Button type="submit" variant="contained">
+              更新
+            </Button>
           </div>
         </form>
       </Suspense>

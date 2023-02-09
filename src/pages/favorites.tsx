@@ -1,3 +1,4 @@
+import { Button } from '@mui/material'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import Layout from 'components/Layout'
 import { Favorite } from 'interfaces/table'
@@ -30,7 +31,13 @@ const AccountPage: NextPage = () => {
           <>
             <div>
               <img src={f.url} alt={`favorite_cat_image_${i}`} />
-              <button onClick={() => remove(f.id)}>削除</button>
+              <Button
+                onClick={() => remove(f.id)}
+                variant="contained"
+                color="error"
+              >
+                削除
+              </Button>
             </div>
             <hr />
           </>

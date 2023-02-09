@@ -1,3 +1,4 @@
+import { Button } from '@mui/material'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
 import { AuthForm } from 'interfaces/auth_form'
@@ -44,12 +45,14 @@ const AuthPage: NextPage = () => {
         </div>
         {errors.password && <span>パスワードは必須です。</span>}
         <div>
-          <button type="submit">{title(isLogin)}</button>
+          <Button type="submit" variant="contained">
+            {title(isLogin)}
+          </Button>
         </div>
       </form>
-      <button onClick={() => setIsLogin(!isLogin)}>
+      <Button onClick={() => setIsLogin(!isLogin)} variant="text">
         {title(!isLogin)}画面に切り替える
-      </button>
+      </Button>
     </>
   )
 }

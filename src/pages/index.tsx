@@ -1,3 +1,4 @@
+import { Button } from '@mui/material'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
 import Layout from 'components/Layout'
@@ -27,7 +28,13 @@ const IndexPage: NextPage = () => {
 
       <Suspense fallback={<div>Loading...</div>}>
         <div>
-          <button onClick={randomCatImage}>ねこを入れ替える🐈</button>
+          <Button
+            onClick={randomCatImage}
+            variant="contained"
+            color="secondary"
+          >
+            ねこを入れ替える🐈
+          </Button>
         </div>
         <div>
           <img src={catImage} width={500} height="auto" />
@@ -36,7 +43,9 @@ const IndexPage: NextPage = () => {
 
       {user ? (
         <div>
-          <button onClick={favorite}>お気に入り登録⭐️</button>
+          <Button onClick={favorite} variant="contained" color="success">
+            お気に入り登録⭐️
+          </Button>
         </div>
       ) : (
         <div>
