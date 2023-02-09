@@ -3,7 +3,10 @@ import { Database } from 'interfaces/database.types'
 import { CatImage } from 'interfaces/index'
 import { Favorite } from 'interfaces/table'
 import { Dispatch, SetStateAction } from 'react'
-import { create, fetch as fetchFavorites } from 'repositories/supabase_favorite'
+import {
+  create,
+  fetch as fetchFavorites,
+} from 'repositories/supabase/db_favorite'
 import { v4 as uuidv4 } from 'uuid'
 
 export const fetchCatImage = async (

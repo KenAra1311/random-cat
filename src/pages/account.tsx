@@ -3,9 +3,9 @@ import { formatDate } from 'common/time'
 import Layout from 'components/Layout'
 import { Profile } from 'interfaces/table'
 import { NextPage } from 'next'
-import { Suspense, useEffect, useState } from 'react'
+import { ChangeEvent, Suspense, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { fetchProfile, updateProfile } from 'utils/account'
+import { fetchProfile, updateAvatar, updateProfile } from 'utils/account'
 
 const AccountPage: NextPage = () => {
   const supabase = useSupabaseClient()
@@ -13,12 +13,16 @@ const AccountPage: NextPage = () => {
   const { register, handleSubmit, setValue } = useForm<Profile>()
 
   const [profile, setProfile] = useState<Profile>({} as Profile)
+  const [uploading, setUploading] = useState<boolean>(false)
 
   useEffect(() => {
     fetchProfile(supabase, user, setProfile, setValue)
   }, [supabase, user])
 
   if (!user) return <></>
+
+  const upload = (e: ChangeEvent<HTMLInputElement>) =>
+    updateAvatar(supabase, user, profile, e, setUploading)
 
   const save = (data: Profile) => updateProfile(supabase, user, data)
 
@@ -56,6 +60,13 @@ const AccountPage: NextPage = () => {
             ) : (
               <>画像なし</>
             )}
+            <br />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={upload}
+              disabled={uploading}
+            />
           </div>
           <div>
             <label>登録日時</label>

@@ -1,8 +1,9 @@
 import { SupabaseClient, User } from '@supabase/supabase-js'
 import { Profile } from 'interfaces/table'
-import { Dispatch, SetStateAction } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { UseFormSetValue } from 'react-hook-form'
-import { fetchMe, update } from 'repositories/supabase_profile'
+import { fetchMe, update } from 'repositories/supabase/db_profile'
+import { upload } from 'repositories/supabase/storage_profile'
 
 export const fetchProfile = async (
   supabase: SupabaseClient<any, 'public', any>,
@@ -27,6 +28,26 @@ export const fetchProfile = async (
     alert(error.error_description || error.message)
     console.log(error)
   }
+}
+
+export const updateAvatar = async (
+  supabase: SupabaseClient<any, 'public', any>,
+  user: User,
+  data: Profile,
+  e: ChangeEvent<HTMLInputElement>,
+  setUploading: Dispatch<SetStateAction<boolean>>
+) => {
+  setUploading(true)
+  try {
+    data.avatar_url = await upload(supabase, user, e)
+    await update(supabase, user, data)
+
+    alert('アバター画像の更新が完了しました😺')
+  } catch (error) {
+    alert(error.error_description || error.message)
+    console.log(error)
+  }
+  setUploading(false)
 }
 
 export const updateProfile = async (

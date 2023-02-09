@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from 'react'
 import {
   fetch as fetchFavoritesRecord,
   remove as removeFavoriteRecord,
-} from 'repositories/supabase_favorite'
+} from 'repositories/supabase/db_favorite'
 
 export const fetchFavorites = async (
   supabase: SupabaseClient<any, 'public', any>,
