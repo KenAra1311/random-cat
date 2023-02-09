@@ -18,8 +18,10 @@ export const fetchProfile = async (
     const profile = await fetchMe(supabase, user)
     setProfile(profile)
 
-    const avatarUrl = await download(supabase, profile.avatar_url)
-    if (avatarUrl) setAvatar(avatarUrl)
+    if (profile.avatar_url) {
+      const avatarUrl = await download(supabase, profile.avatar_url)
+      if (avatarUrl) setAvatar(avatarUrl)
+    }
 
     setValue('id', profile.id)
     setValue('created_at', profile.created_at)
