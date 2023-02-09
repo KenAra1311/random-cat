@@ -12,6 +12,12 @@
 5. テーブルの追加・削除においては、以下の型定義ファイルも変更しておく必要があるので、必要に応じ型を呼び出す型を定義または削除しておく
    `src/interfaces/table.ts`
 
+## ホスティング先にマイグレーションを反映する時
+
+1. ローカルとプロジェクトが紐づいてない場合は以下を実行する
+   `supabase link --project-ref [SupabaseのプロジェクトID]`
+2. `supabase db push`を実行し、マイグレーション反映
+
 # TypeScript Next.js example
 
 This is a really simple project that shows the usage of Next.js with TypeScript.
