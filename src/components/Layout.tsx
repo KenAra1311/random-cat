@@ -44,10 +44,14 @@ const Layout: React.FC<Props> = ({ children, title }: Props) => {
 
   const logout = () => logoutUser(supabase, router)
 
+  const TITLE = 'ねこ祭り🐱'
+
   return (
     <Container maxWidth="md">
       <Head>
-        <title>ねこ祭り🐱 | {title}</title>
+        <title>
+          {TITLE} | {title}
+        </title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
@@ -59,7 +63,7 @@ const Layout: React.FC<Props> = ({ children, title }: Props) => {
             onClick={() => router.push(Routes.ROOT)}
             style={{ cursor: 'pointer' }}
           >
-            ねこ祭り🐱
+            {TITLE}
           </Typography>
           <div style={{ flexGrow: 1 }}></div>
           {user && (
@@ -94,10 +98,7 @@ const Layout: React.FC<Props> = ({ children, title }: Props) => {
         </Toolbar>
       </AppBar>
       {children}
-      <footer>
-        <hr />
-        test aramaki
-      </footer>
+      <footer>{TITLE} by KenAra</footer>
     </Container>
   )
 }
