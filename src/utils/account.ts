@@ -10,7 +10,7 @@ export const fetchProfile = async (
   user: User,
   setProfile: Dispatch<SetStateAction<Profile>>,
   setAvatar: Dispatch<SetStateAction<string>>,
-  setValue: UseFormSetValue<Profile>
+  setValue?: UseFormSetValue<Profile>
 ): Promise<void> => {
   if (!user) return
 
@@ -22,6 +22,8 @@ export const fetchProfile = async (
       const avatarUrl = await download(supabase, profile.avatar_url)
       if (avatarUrl) setAvatar(avatarUrl)
     }
+
+    if (!setValue) return
 
     setValue('id', profile.id)
     setValue('created_at', profile.created_at)

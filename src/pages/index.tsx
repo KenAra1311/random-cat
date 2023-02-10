@@ -24,8 +24,6 @@ const IndexPage: NextPage = () => {
 
   return (
     <Layout title="Home">
-      <h1>ねこ祭り🐱</h1>
-
       <Suspense fallback={<div>Loading...</div>}>
         <div>
           <Button
