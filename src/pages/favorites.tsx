@@ -1,4 +1,9 @@
-import { Button } from '@mui/material'
+import {
+  IconButton,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+} from '@mui/material'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import Layout from 'components/Layout'
 import { Favorite } from 'interfaces/table'
@@ -27,21 +32,31 @@ const AccountPage: NextPage = () => {
       <h1>お気に入り一覧</h1>
 
       <Suspense fallback={<div>Loading...</div>}>
-        {favorites.map((f, i) => (
-          <>
-            <div>
-              <img src={f.url} alt={`favorite_cat_image_${i}`} width="100%" />
-              <Button
-                onClick={() => remove(f.id)}
-                variant="contained"
-                color="error"
-              >
-                削除
-              </Button>
-            </div>
-            <hr />
-          </>
-        ))}
+        <ImageList sx={{ width: '100%' }}>
+          {favorites.map((f, i) => (
+            <ImageListItem key={i}>
+              <img
+                src={`${f.url}?w=50%&fit=crop&auto=format`}
+                srcSet={`${f.url}?w=50%&fit=crop&auto=format&dpr=2 2x`}
+                alt={`お気に入り${i}`}
+                loading="lazy"
+              />
+              <ImageListItemBar
+                title={`お気に入り${i}`}
+                subtitle={`${user.email}`}
+                actionIcon={
+                  <IconButton
+                    sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                    aria-label={`info about ${i}`}
+                    onClick={() => remove(f.id)}
+                  >
+                    削除
+                  </IconButton>
+                }
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
       </Suspense>
     </Layout>
   )
