@@ -11,7 +11,6 @@ import {
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
 import { Profile } from 'interfaces/table'
-import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactNode, useEffect, useState } from 'react'
@@ -24,7 +23,7 @@ type Props = {
   title?: string
 }
 
-const Layout: NextPage<Props> = ({ children, title }: Props) => {
+const Layout: React.FC<Props> = ({ children, title }: Props) => {
   const supabase = useSupabaseClient()
   const user = useUser()
   const router = useRouter()
