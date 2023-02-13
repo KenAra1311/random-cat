@@ -7,9 +7,11 @@ type Props = {
   profile: Profile
 }
 
-const AvatarIcon: ReactNode = ({ image, profile: { email } }: Props) => {
-  if (image) return <Avatar src={image} alt="profile_avatar" />
-  return <Avatar alt="profile_avatar">{email ? email.slice(0, 1) : ''}</Avatar>
-}
+const AvatarIcon: ReactNode = ({ image, profile: { email } }: Props) =>
+  image ? (
+    <Avatar src={image} alt="profile_avatar" />
+  ) : (
+    <Avatar alt="profile_avatar">{email ? email.slice(0, 1) : ''}</Avatar>
+  )
 
 export default AvatarIcon
