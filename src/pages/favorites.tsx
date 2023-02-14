@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete'
 import {
   IconButton,
   ImageList,
@@ -50,7 +51,7 @@ const AccountPage: NextPage = () => {
                     aria-label={`info about ${i}`}
                     onClick={() => remove(f.id)}
                   >
-                    削除
+                    <DeleteIcon />
                   </IconButton>
                 }
               />
