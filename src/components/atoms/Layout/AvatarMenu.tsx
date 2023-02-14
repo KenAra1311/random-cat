@@ -1,4 +1,4 @@
-import PersonIcon from '@mui/icons-material/Person'
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 import {
   Avatar,
   IconButton,
@@ -52,7 +52,7 @@ const AvatarMenu: React.FC = () => {
         <Tooltip title="avatar">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
             <Avatar>
-              <PersonIcon />
+              <QuestionMarkIcon />
             </Avatar>
           </IconButton>
         </Tooltip>
