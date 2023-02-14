@@ -1,12 +1,8 @@
 import { AppBar, Container, Toolbar, Typography } from '@mui/material'
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
-import { Profile } from 'interfaces/table'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { ReactNode, useEffect, useState } from 'react'
-import { fetchProfile } from 'utils/account'
-import { logout as logoutUser } from 'utils/auth'
+import { ReactNode } from 'react'
 import AvatarMenu from './atoms/Layout/AvatarMenu'
 
 type Props = {
@@ -15,25 +11,7 @@ type Props = {
 }
 
 const Layout: React.FC<Props> = ({ children, title }: Props) => {
-  const supabase = useSupabaseClient()
-  const user = useUser()
   const router = useRouter()
-
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
-  const [profile, setProfile] = useState<Profile>({} as Profile)
-  const [avatar, setAvatar] = useState<string>('')
-
-  useEffect(() => {
-    fetchProfile(supabase, user, setProfile, setAvatar)
-  }, [supabase, user])
-
-  const handleOpenUserMenu = ({
-    currentTarget,
-  }: React.MouseEvent<HTMLElement>) => setAnchorElUser(currentTarget)
-
-  const handleCloseUserMenu = () => setAnchorElUser(null)
-
-  const logout = () => logoutUser(supabase, router)
 
   const TITLE = 'ねこ祭り🐱'
 
@@ -46,7 +24,7 @@ const Layout: React.FC<Props> = ({ children, title }: Props) => {
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ mt: -1 }}>
         <Toolbar>
           <Typography
             variant="h6"
