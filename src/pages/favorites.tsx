@@ -13,7 +13,7 @@ import { useRouter } from 'next/router'
 import { Suspense, useEffect, useState } from 'react'
 import { fetchFavorites, removeFavorite } from 'utils/favorites'
 
-const AccountPage: NextPage = () => {
+const FavoritesPage: NextPage = () => {
   const supabase = useSupabaseClient()
   const user = useUser()
   const router = useRouter()
@@ -44,7 +44,6 @@ const AccountPage: NextPage = () => {
               />
               <ImageListItemBar
                 title={`お気に入り${i}`}
-                subtitle={`${user.email}`}
                 actionIcon={
                   <IconButton
                     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
@@ -63,4 +62,4 @@ const AccountPage: NextPage = () => {
   )
 }
 
-export default AccountPage
+export default FavoritesPage
