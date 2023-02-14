@@ -1,13 +1,4 @@
-import {
-  AppBar,
-  Container,
-  IconButton,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Tooltip,
-  Typography,
-} from '@mui/material'
+import { AppBar, Container, Toolbar, Typography } from '@mui/material'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
 import { Profile } from 'interfaces/table'
@@ -16,7 +7,7 @@ import { useRouter } from 'next/router'
 import { ReactNode, useEffect, useState } from 'react'
 import { fetchProfile } from 'utils/account'
 import { logout as logoutUser } from 'utils/auth'
-import AvatarIcon from './atoms/AvatarIcon'
+import AvatarMenu from './atoms/Layout/AvatarMenu'
 
 type Props = {
   children?: ReactNode
@@ -66,35 +57,7 @@ const Layout: React.FC<Props> = ({ children, title }: Props) => {
             {TITLE}
           </Typography>
           <div style={{ flexGrow: 1 }}></div>
-          {user && (
-            <>
-              <Tooltip title="avatar">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <AvatarIcon image={avatar} profile={profile} />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                keepMounted
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <MenuItem onClick={() => router.push(Routes.ACCOUNT)}>
-                  <Typography textAlign="center">アカウント情報</Typography>
-                </MenuItem>
-                <MenuItem onClick={() => router.push(Routes.FAVORITES)}>
-                  <Typography textAlign="center">お気に入り一覧</Typography>
-                </MenuItem>
-                <MenuItem onClick={logout}>
-                  <Typography textAlign="center">ログアウト</Typography>
-                </MenuItem>
-              </Menu>
-            </>
-          )}
+          <AvatarMenu />
         </Toolbar>
       </AppBar>
       {children}

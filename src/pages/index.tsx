@@ -1,10 +1,8 @@
 import { Button } from '@mui/material'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
-import { Routes } from 'common/enums'
 import Layout from 'components/Layout'
 import { Database } from 'interfaces/database.types'
 import { NextPage } from 'next'
-import Link from 'next/link'
 import { Suspense, useEffect, useState } from 'react'
 import { createFavorite, fetchCatImage } from 'utils/index'
 
@@ -39,17 +37,11 @@ const IndexPage: NextPage = () => {
         </div>
       </Suspense>
 
-      {user ? (
+      {user && (
         <div>
           <Button onClick={favorite} variant="contained" color="success">
             お気に入り登録⭐️
           </Button>
-        </div>
-      ) : (
-        <div>
-          アカウントを作成したら、お気に入り登録できます😄
-          <br />
-          <Link href={Routes.AUTH}>ログイン画面へ</Link>
         </div>
       )}
     </Layout>
