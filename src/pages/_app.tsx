@@ -13,12 +13,14 @@ const MyApp: NextPage<AppProps<{ initialSession: Session }>> = ({
     createBrowserSupabaseClient<Database>()
   )
 
+  const Child = Component as any
+
   return (
     <SessionContextProvider
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
-      <Component {...pageProps} />
+      <Child {...pageProps} />
     </SessionContextProvider>
   )
 }
