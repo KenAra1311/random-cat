@@ -1,4 +1,4 @@
-import { Box, Button, Card, TextField, Typography } from '@mui/material'
+import { Box, Button, Card, Grid, TextField, Typography } from '@mui/material'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { formatDate } from 'common/time'
 import AvatarIcon from 'components/atoms/AvatarIcon'
@@ -34,7 +34,16 @@ const AccountPage: NextPage = () => {
       <Card sx={{ my: 2 }}>
         <Typography align="center" sx={{ my: 3 }}>
           <h1>アカウント情報</h1>
-          <AvatarIcon image={avatar} profile={profile} />
+
+          <Grid
+            container
+            alignItems="center"
+            justifyContent="center"
+            direction="column"
+            sx={{ my: 2 }}
+          >
+            <AvatarIcon image={avatar} profile={profile} />
+          </Grid>
           <Box sx={{ mb: 2, mx: 2 }}>
             <Button variant="contained" component="label">
               アバター画像更新

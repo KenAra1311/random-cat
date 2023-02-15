@@ -11,9 +11,12 @@ const AvatarIcon: React.FC<Props> = ({
   image,
   profile: { username },
 }: Props) => {
-  if (image) return <Avatar src={image} alt="profile_avatar" />
+  if (image)
+    return (
+      <Avatar src={image} alt="profile_avatar" sx={{ width: 56, height: 56 }} />
+    )
   return (
-    <Avatar alt="profile_avatar">
+    <Avatar alt="profile_avatar" sx={{ width: 56, height: 56 }}>
       {username ? username.slice(0, 1) : <PersonIcon />}
     </Avatar>
   )
