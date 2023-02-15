@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+import { Box, Button, Card, TextField, Typography } from '@mui/material'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { formatDate } from 'common/time'
 import AvatarIcon from 'components/atoms/AvatarIcon'
@@ -31,63 +31,75 @@ const AccountPage: NextPage = () => {
 
   return (
     <Layout title="アカウント情報">
-      <h1>アカウント情報</h1>
-
-      <Suspense fallback={<div>Loading...</div>}>
-        <AvatarIcon image={avatar} profile={profile} />
-
-        <form onSubmit={handleSubmit(save)}>
-          <div>
-            <label>ID</label>
-            <br />
-            <div>{profile.id}</div>
-          </div>
-          <div>
-            <label>メールアドレス</label>
-            <br />
-            <div>{profile.email}</div>
-          </div>
-          <div>
-            <label>名前</label>
-            <br />
-            <input type="text" {...register('username')} />
-          </div>
-          <div>
-            <label>Webサイト</label>
-            <br />
-            <input type="text" {...register('website')} />
-          </div>
-          <div>
-            <label>アバター</label>
-            <br />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={upload}
-              disabled={uploading}
-            />
-          </div>
-          <div>
-            <label>登録日時</label>
-            <br />
-            <div>{formatDate(profile.created_at)}</div>
-          </div>
-          <div>
-            <label>更新日時</label>
-            <br />
-            <div>
-              {profile.updated_at
-                ? formatDate(profile.updated_at)
-                : 'データなし'}
-            </div>
-          </div>
-          <div>
-            <Button type="submit" variant="contained">
-              更新
+      <Card sx={{ my: 2 }}>
+        <Typography align="center" sx={{ my: 3 }}>
+          <h1>アカウント情報</h1>
+          <AvatarIcon image={avatar} profile={profile} />
+          <Box sx={{ mb: 2, mx: 2 }}>
+            <Button variant="contained" component="label">
+              アバター画像更新
+              <input
+                type="file"
+                accept="image/*"
+                onChange={upload}
+                disabled={uploading}
+                hidden
+              />
             </Button>
-          </div>
-        </form>
-      </Suspense>
+          </Box>
+
+          <Suspense fallback={<div>Loading...</div>}>
+            <Box component="form" onSubmit={handleSubmit(save)}>
+              <Box sx={{ mb: 2, mx: 2 }}>
+                <TextField label="ID" value={profile.id} disabled fullWidth />
+              </Box>
+              <Box sx={{ mb: 2, mx: 2 }}>
+                <TextField
+                  label="メールアドレス"
+                  value={profile.email}
+                  disabled
+                  fullWidth
+                />
+              </Box>
+              <Box sx={{ mb: 2, mx: 2 }}>
+                <TextField label="名前" fullWidth {...register('username')} />
+              </Box>
+              <Box sx={{ mb: 2, mx: 2 }}>
+                <TextField
+                  label="Webサイト"
+                  fullWidth
+                  {...register('website')}
+                />
+              </Box>
+              <Box sx={{ mb: 2, mx: 2 }}>
+                <TextField
+                  label="登録日時"
+                  value={profile.created_at}
+                  disabled
+                  fullWidth
+                />
+              </Box>
+              <Box sx={{ mb: 2, mx: 2 }}>
+                <TextField
+                  label="更新日時"
+                  value={
+                    profile.updated_at
+                      ? formatDate(profile.updated_at)
+                      : 'データなし'
+                  }
+                  disabled
+                  fullWidth
+                />
+              </Box>
+              <Box>
+                <Button type="submit" variant="contained">
+                  更新
+                </Button>
+              </Box>
+            </Box>
+          </Suspense>
+        </Typography>
+      </Card>
     </Layout>
   )
 }

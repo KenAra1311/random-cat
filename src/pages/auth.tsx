@@ -53,6 +53,7 @@ const AuthPage: NextPage = () => {
                 id="password"
                 label="パスワード"
                 variant="outlined"
+                type="password"
                 error={!!errors.password}
                 helperText={errors.password ? 'パスワードは必須です。' : ''}
                 {...register('password', { required: true })}
