@@ -7,27 +7,24 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material'
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
 import AvatarIcon from 'components/atoms/AvatarIcon'
-import { Profile } from 'interfaces/table'
 import { useRouter } from 'next/router'
-import { MouseEventHandler, useEffect, useState } from 'react'
+import { AuthContext } from 'providers/AuthProvider'
+import { MouseEventHandler, useContext, useEffect, useState } from 'react'
 import { fetchProfile } from 'utils/account'
 import { logout as logoutUser } from 'utils/auth'
 
 const AvatarMenu: React.FC = () => {
-  const supabase = useSupabaseClient()
-  const user = useUser()
+  const sharedState = useContext(AuthContext)
   const router = useRouter()
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
-  const [profile, setProfile] = useState<Profile>({} as Profile)
   const [avatar, setAvatar] = useState<string>('')
 
   useEffect(() => {
-    fetchProfile(supabase, user, setProfile, setAvatar)
-  }, [supabase, user])
+    fetchProfile(sharedState, setAvatar)
+  }, [sharedState])
 
   const handleOpenUserMenu = ({
     currentTarget,
@@ -35,7 +32,7 @@ const AvatarMenu: React.FC = () => {
 
   const handleCloseUserMenu = () => setAnchorElUser(null)
 
-  const logout = () => logoutUser(supabase, router)
+  const logout = () => logoutUser(sharedState, router)
 
   const menuItemList: {
     onClick: MouseEventHandler<HTMLAnchorElement>
@@ -46,7 +43,7 @@ const AvatarMenu: React.FC = () => {
     { onClick: logout, content: 'ログアウト' },
   ]
 
-  if (!user)
+  if (!sharedState.user) {
     return (
       <>
         <Tooltip title="avatar">
@@ -72,12 +69,13 @@ const AvatarMenu: React.FC = () => {
         </Menu>
       </>
     )
+  }
 
   return (
     <>
       <Tooltip title="avatar">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <AvatarIcon image={avatar} profile={profile} />
+          <AvatarIcon image={avatar} profile={sharedState.profile} />
         </IconButton>
       </Tooltip>
       <Menu

@@ -1,13 +1,15 @@
 import { SupabaseClient } from '@supabase/supabase-js'
 import { Routes } from 'common/enums'
 import { AuthForm } from 'interfaces/auth_form'
+import { AuthProviderProps } from 'interfaces/auth_provider'
+import { Database } from 'interfaces/database.types'
 import { NextRouter } from 'next/router'
 
 export const title = (isLogin: boolean) =>
   isLogin ? 'ログイン' : 'アカウント登録'
 
 export const authenticate = async (
-  { auth }: SupabaseClient<any, 'public', any>,
+  { auth }: SupabaseClient<Database, 'public', any>,
   data: AuthForm,
   isLogin: boolean
 ): Promise<void> => {
@@ -30,7 +32,7 @@ export const authenticate = async (
 }
 
 export const logout = async (
-  { auth }: SupabaseClient<any, 'public', any>,
+  { supabase: { auth } }: AuthProviderProps,
   { replace }: NextRouter
 ) => {
   try {

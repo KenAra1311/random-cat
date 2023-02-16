@@ -6,18 +6,20 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { Routes } from 'common/enums'
 import { AuthForm } from 'interfaces/auth_form'
+import { Database } from 'interfaces/database.types'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { AuthContext } from 'providers/AuthProvider'
+import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { authenticate, title } from 'utils/auth'
 
 const AuthPage: NextPage = () => {
-  const supabaseClient = useSupabaseClient()
-  const user = useUser()
+  const sharedState = useContext(AuthContext)
+  const supabase = useSupabaseClient<Database>()
   const router = useRouter()
   const {
     register,
@@ -27,10 +29,9 @@ const AuthPage: NextPage = () => {
 
   const [isLogin, setIsLogin] = useState<boolean>(true)
 
-  if (user) router.replace(Routes.ROOT)
+  if (sharedState.user) router.replace(Routes.ROOT)
 
-  const onSubmit = (data: AuthForm) =>
-    authenticate(supabaseClient, data, isLogin)
+  const onSubmit = (data: AuthForm) => authenticate(supabase, data, isLogin)
 
   return (
     <Container maxWidth="md">

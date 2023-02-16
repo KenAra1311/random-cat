@@ -1,23 +1,19 @@
-import { SupabaseClient, User } from '@supabase/supabase-js'
+import { AuthProviderProps } from 'interfaces/auth_provider'
 import { Profile } from 'interfaces/table'
+import { reloadProfile } from 'providers/AuthProvider'
 import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { UseFormSetValue } from 'react-hook-form'
-import { fetchMe, update } from 'repositories/supabase/db_profile'
+import { update } from 'repositories/supabase/db_profile'
 import { download, upload } from 'repositories/supabase/storage_avatar'
 
 export const fetchProfile = async (
-  supabase: SupabaseClient<any, 'public', any>,
-  user: User,
-  setProfile: Dispatch<SetStateAction<Profile>>,
+  { supabase, user, profile }: AuthProviderProps,
   setAvatar: Dispatch<SetStateAction<string>>,
   setValue?: UseFormSetValue<Profile>
 ): Promise<void> => {
   if (!user) return
 
   try {
-    const profile = await fetchMe(supabase, user)
-    setProfile(profile)
-
     if (profile.avatar_url) {
       const avatarUrl = await download(supabase, profile.avatar_url)
       if (avatarUrl) setAvatar(avatarUrl)
@@ -39,16 +35,19 @@ export const fetchProfile = async (
 }
 
 export const updateAvatar = async (
-  supabase: SupabaseClient<any, 'public', any>,
-  user: User,
-  data: Profile,
+  sharedState: AuthProviderProps,
   e: ChangeEvent<HTMLInputElement>,
   setUploading: Dispatch<SetStateAction<boolean>>
 ) => {
   setUploading(true)
   try {
-    data.avatar_url = await upload(supabase, user, e)
-    await update(supabase, user, data)
+    sharedState.profile.avatar_url = await upload(
+      sharedState.supabase,
+      sharedState.user,
+      e
+    )
+    await update(sharedState.supabase, sharedState.user, sharedState.profile)
+    await reloadProfile(sharedState)
 
     alert('アバター画像の更新が完了しました😺')
   } catch (error) {
@@ -59,12 +58,12 @@ export const updateAvatar = async (
 }
 
 export const updateProfile = async (
-  supabase: SupabaseClient<any, 'public', any>,
-  user: User,
+  sharedState: AuthProviderProps,
   data: Profile
 ) => {
   try {
-    await update(supabase, user, data)
+    await update(sharedState.supabase, sharedState.user, data)
+    await reloadProfile(sharedState)
 
     alert('アカウント情報の更新が完了しました😺')
   } catch (error) {

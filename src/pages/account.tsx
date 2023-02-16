@@ -1,33 +1,31 @@
 import { Box, Button, Card, Grid, TextField, Typography } from '@mui/material'
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { formatDate } from 'common/time'
 import AvatarIcon from 'components/atoms/AvatarIcon'
 import Layout from 'components/Layout'
 import { Profile } from 'interfaces/table'
 import { NextPage } from 'next'
-import { ChangeEvent, Suspense, useEffect, useState } from 'react'
+import { AuthContext } from 'providers/AuthProvider'
+import { ChangeEvent, Suspense, useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { fetchProfile, updateAvatar, updateProfile } from 'utils/account'
 
 const AccountPage: NextPage = () => {
-  const supabase = useSupabaseClient()
-  const user = useUser()
+  const sharedState = useContext(AuthContext)
   const { register, handleSubmit, setValue } = useForm<Profile>()
 
-  const [profile, setProfile] = useState<Profile>({} as Profile)
   const [avatar, setAvatar] = useState<string>('')
   const [uploading, setUploading] = useState<boolean>(false)
 
   useEffect(() => {
-    fetchProfile(supabase, user, setProfile, setAvatar, setValue)
-  }, [supabase, user])
+    fetchProfile(sharedState, setAvatar, setValue)
+  }, [sharedState])
 
-  if (!user) return <></>
+  if (!sharedState.user) return <></>
 
   const upload = (e: ChangeEvent<HTMLInputElement>) =>
-    updateAvatar(supabase, user, profile, e, setUploading)
+    updateAvatar(sharedState, e, setUploading)
 
-  const save = (data: Profile) => updateProfile(supabase, user, data)
+  const save = (data: Profile) => updateProfile(sharedState, data)
 
   return (
     <Layout title="アカウント情報">
@@ -42,7 +40,7 @@ const AccountPage: NextPage = () => {
             direction="column"
             sx={{ my: 2 }}
           >
-            <AvatarIcon image={avatar} profile={profile} />
+            <AvatarIcon image={avatar} profile={sharedState.profile} />
           </Grid>
           <Box sx={{ mb: 2, mx: 2 }}>
             <Button variant="contained" component="label">
@@ -60,12 +58,17 @@ const AccountPage: NextPage = () => {
           <Suspense fallback={<div>Loading...</div>}>
             <Box component="form" onSubmit={handleSubmit(save)}>
               <Box sx={{ mb: 2, mx: 2 }}>
-                <TextField label="ID" value={profile.id} disabled fullWidth />
+                <TextField
+                  label="ID"
+                  value={sharedState.profile.id}
+                  disabled
+                  fullWidth
+                />
               </Box>
               <Box sx={{ mb: 2, mx: 2 }}>
                 <TextField
                   label="メールアドレス"
-                  value={profile.email}
+                  value={sharedState.profile.email}
                   disabled
                   fullWidth
                 />
@@ -83,7 +86,7 @@ const AccountPage: NextPage = () => {
               <Box sx={{ mb: 2, mx: 2 }}>
                 <TextField
                   label="登録日時"
-                  value={profile.created_at}
+                  value={sharedState.profile.created_at}
                   disabled
                   fullWidth
                 />
@@ -92,8 +95,8 @@ const AccountPage: NextPage = () => {
                 <TextField
                   label="更新日時"
                   value={
-                    profile.updated_at
-                      ? formatDate(profile.updated_at)
+                    sharedState.profile.updated_at
+                      ? formatDate(sharedState.profile.updated_at)
                       : 'データなし'
                   }
                   disabled

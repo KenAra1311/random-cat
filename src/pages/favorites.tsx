@@ -5,28 +5,18 @@ import {
   ImageListItem,
   ImageListItemBar,
 } from '@mui/material'
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import Layout from 'components/Layout'
-import { Favorite } from 'interfaces/table'
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { Suspense, useEffect, useState } from 'react'
-import { fetchFavorites, removeFavorite } from 'utils/favorites'
+import { AuthContext } from 'providers/AuthProvider'
+import { Suspense, useContext } from 'react'
+import { removeFavorite } from 'utils/favorites'
 
 const FavoritesPage: NextPage = () => {
-  const supabase = useSupabaseClient()
-  const user = useUser()
-  const router = useRouter()
+  const sharedState = useContext(AuthContext)
 
-  const [favorites, setFavorites] = useState<Favorite[]>([])
+  if (!sharedState.user) return <></>
 
-  useEffect(() => {
-    fetchFavorites(supabase, user, setFavorites)
-  }, [supabase, user])
-
-  if (!user) return <></>
-
-  const remove = (id: string) => removeFavorite(supabase, user, router, id)
+  const remove = (id: string) => removeFavorite(sharedState, id)
 
   return (
     <Layout title="お気に入り一覧">
@@ -34,7 +24,7 @@ const FavoritesPage: NextPage = () => {
 
       <Suspense fallback={<div>Loading...</div>}>
         <ImageList sx={{ width: '100%' }}>
-          {favorites.map((f, i) => (
+          {sharedState.favorites.map((f, i) => (
             <ImageListItem key={i}>
               <img
                 src={`${f.url}?w=50%&fit=crop&auto=format`}

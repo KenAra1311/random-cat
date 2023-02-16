@@ -1,14 +1,12 @@
 import { Button } from '@mui/material'
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import Layout from 'components/Layout'
-import { Database } from 'interfaces/database.types'
 import { NextPage } from 'next'
-import { Suspense, useEffect, useState } from 'react'
+import { AuthContext } from 'providers/AuthProvider'
+import { Suspense, useContext, useEffect, useState } from 'react'
 import { createFavorite, fetchCatImage } from 'utils/index'
 
 const IndexPage: NextPage = () => {
-  const supabase = useSupabaseClient<Database>()
-  const user = useUser()
+  const sharedState = useContext(AuthContext)
 
   const [catImage, setCatImage] = useState<string>('')
 
@@ -18,7 +16,7 @@ const IndexPage: NextPage = () => {
 
   const randomCatImage = () => fetchCatImage(setCatImage)
 
-  const favorite = () => createFavorite(supabase, user, catImage)
+  const favorite = () => createFavorite(sharedState, catImage)
 
   return (
     <Layout title="Home">
@@ -37,7 +35,7 @@ const IndexPage: NextPage = () => {
         </div>
       </Suspense>
 
-      {user && (
+      {sharedState.user && (
         <div>
           <Button onClick={favorite} variant="contained" color="success">
             お気に入り登録⭐️

@@ -1,7 +1,7 @@
-import { SupabaseClient, User } from '@supabase/supabase-js'
-import { Database } from 'interfaces/database.types'
+import { AuthProviderProps } from 'interfaces/auth_provider'
 import { CatImage } from 'interfaces/index'
 import { Favorite } from 'interfaces/table'
+import { reloadFavorites } from 'providers/AuthProvider'
 import { Dispatch, SetStateAction } from 'react'
 import {
   create,
@@ -24,12 +24,14 @@ export const fetchCatImage = async (
 }
 
 export const createFavorite = async (
-  supabase: SupabaseClient<Database, 'public', any>,
-  user: User,
+  sharedState: AuthProviderProps,
   url: string
 ): Promise<void> => {
   try {
-    const favorites: Favorite[] = await fetchFavorites(supabase, user)
+    const favorites: Favorite[] = await fetchFavorites(
+      sharedState.supabase,
+      sharedState.user
+    )
     if (favorites.some((f) => f.url === url)) {
       throw new Error('このねこはすでにお気に入り登録済みです！')
     }
@@ -37,10 +39,11 @@ export const createFavorite = async (
     const favorite: Favorite = {
       id: uuidv4(),
       url,
-      profile_id: user.id,
+      profile_id: sharedState.user.id,
       created_at: null,
     }
-    await create(supabase, favorite)
+    await create(sharedState.supabase, favorite)
+    await reloadFavorites(sharedState)
 
     alert('表示されてるねこ画像をお気に入りしました！😸')
   } catch (error) {

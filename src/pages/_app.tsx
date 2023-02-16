@@ -3,6 +3,7 @@ import { Session, SessionContextProvider } from '@supabase/auth-helpers-react'
 import { Database } from 'interfaces/database.types'
 import { NextPage } from 'next'
 import { AppProps } from 'next/app'
+import { AuthProvider } from 'providers/AuthProvider'
 import { useState } from 'react'
 
 const MyApp: NextPage<AppProps<{ initialSession: Session }>> = ({
@@ -20,7 +21,9 @@ const MyApp: NextPage<AppProps<{ initialSession: Session }>> = ({
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
-      <Child {...pageProps} />
+      <AuthProvider>
+        <Child {...pageProps} />
+      </AuthProvider>
     </SessionContextProvider>
   )
 }
