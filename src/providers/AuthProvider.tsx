@@ -37,13 +37,17 @@ export const AuthProvider = ({ children }: { children: any }): JSX.Element => {
     setCurrentUser(user)
     supabase.auth.onAuthStateChange(() => setCurrentUser(user))
 
-    if (user) {
+    if (currentUser) {
       ;(async () => {
-        const data = await getSupabaseData(supabase, user, setSharedState)
+        const data = await getSupabaseData(
+          supabase,
+          currentUser,
+          setSharedState
+        )
         setSharedState(data)
       })()
     }
-  }, [supabase, user])
+  }, [supabase, user, currentUser])
 
   return (
     <AuthContext.Provider value={sharedState}>{children}</AuthContext.Provider>
