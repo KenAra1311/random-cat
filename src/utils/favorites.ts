@@ -1,25 +1,6 @@
 import { AuthProviderProps } from 'interfaces/auth_provider'
-import { Favorite } from 'interfaces/table'
 import { reloadFavorites } from 'providers/AuthProvider'
-import { Dispatch, SetStateAction } from 'react'
-import {
-  fetch as fetchFavoritesRecord,
-  remove as removeFavoriteRecord,
-} from 'repositories/supabase/db_favorite'
-
-export const fetchFavorites = async (
-  { supabase, user }: AuthProviderProps,
-  setFavorites: Dispatch<SetStateAction<Favorite[]>>
-): Promise<void> => {
-  if (!user) return
-
-  try {
-    setFavorites(await fetchFavoritesRecord(supabase, user))
-  } catch (error) {
-    alert(error.error_description || error.message)
-    console.log(error)
-  }
-}
+import { remove as removeFavoriteRecord } from 'repositories/supabase/db_favorite'
 
 export const removeFavorite = async (
   sharedState: AuthProviderProps,

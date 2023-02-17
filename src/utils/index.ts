@@ -3,10 +3,7 @@ import { CatImage } from 'interfaces/index'
 import { Favorite } from 'interfaces/table'
 import { reloadFavorites } from 'providers/AuthProvider'
 import { Dispatch, SetStateAction } from 'react'
-import {
-  create,
-  fetch as fetchFavorites,
-} from 'repositories/supabase/db_favorite'
+import { create } from 'repositories/supabase/db_favorite'
 import { v4 as uuidv4 } from 'uuid'
 
 export const fetchCatImage = async (
@@ -28,11 +25,7 @@ export const createFavorite = async (
   url: string
 ): Promise<void> => {
   try {
-    const favorites: Favorite[] = await fetchFavorites(
-      sharedState.supabase,
-      sharedState.user
-    )
-    if (favorites.some((f) => f.url === url)) {
+    if (sharedState.favorites.some((f) => f.url === url)) {
       throw new Error('このねこはすでにお気に入り登録済みです！')
     }
 
