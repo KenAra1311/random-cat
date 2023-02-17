@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: { children: any }): JSX.Element => {
   const supabase = useSupabaseClient<Database>()
   const user = useUser()
 
-  const [currentUser, setCurrentUser] = useState<User | null>(null)
+  const [currentUser, setCurrentUser] = useState<User | null>(user)
   const [sharedState, setSharedState] = useState<AuthProviderProps>({
     isLoading: true,
     user,
@@ -35,18 +35,13 @@ export const AuthProvider = ({ children }: { children: any }): JSX.Element => {
 
   useEffect(() => {
     setCurrentUser(user)
-    supabase.auth.onAuthStateChange(() => setCurrentUser(user))
-
-    if (currentUser) {
-      ;(async () => {
-        const data = await getSupabaseData(
-          supabase,
-          currentUser,
-          setSharedState
-        )
-        setSharedState(data)
-      })()
-    }
+    supabase.auth.onAuthStateChange((e) =>
+      e === 'SIGNED_IN' ? setCurrentUser(user) : setCurrentUser(null)
+    )
+    ;(async () => {
+      const data = await getSupabaseData(supabase, currentUser, setSharedState)
+      setSharedState(data)
+    })()
   }, [supabase, user, currentUser])
 
   return (
@@ -60,6 +55,8 @@ const getSupabaseData = async (
   setSharedState: React.Dispatch<React.SetStateAction<AuthProviderProps>>
 ): Promise<AuthProviderProps> => {
   try {
+    if (!user) return init(supabase, user)
+
     const promises = [fetchMe(supabase, user), fetchFavorites(supabase, user)]
     const [profile, favorites] = await Promise.all<any>(promises)
 
@@ -74,16 +71,21 @@ const getSupabaseData = async (
   } catch (error) {
     console.log(error)
 
-    return {
-      isLoading: false,
-      user: null,
-      supabase: null,
-      setSharedState: null,
-      profile: null,
-      favorites: [],
-    }
+    return init(supabase, user)
   }
 }
+
+const init = (
+  supabase: SupabaseClient<Database, 'public', any>,
+  user: User
+) => ({
+  isLoading: false,
+  user,
+  supabase,
+  setSharedState: null,
+  profile: null,
+  favorites: [],
+})
 
 export const reloadProfile = async (sharedState: AuthProviderProps) => {
   const profile = sharedState.user

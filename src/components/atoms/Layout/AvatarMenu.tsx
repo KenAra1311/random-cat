@@ -46,7 +46,7 @@ const AvatarMenu: React.FC = () => {
   if (!sharedState.user) {
     return (
       <>
-        <Tooltip title="avatar">
+        <Tooltip title="メニュー">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
             <Avatar>
               <QuestionMarkIcon />
@@ -63,7 +63,7 @@ const AvatarMenu: React.FC = () => {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <MenuItem onClick={() => router.push(Routes.AUTH)} href="">
+          <MenuItem key={0} onClick={() => router.push(Routes.AUTH)} href="">
             <Typography textAlign="center">ログイン画面へ</Typography>
           </MenuItem>
         </Menu>
@@ -88,8 +88,8 @@ const AvatarMenu: React.FC = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {menuItemList.map(({ onClick, content }) => (
-          <MenuItem onClick={onClick} href="">
+        {menuItemList.map(({ onClick, content }, i) => (
+          <MenuItem key={i} onClick={onClick} href="">
             <Typography textAlign="center">{content}</Typography>
           </MenuItem>
         ))}
