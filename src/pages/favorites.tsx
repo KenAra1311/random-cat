@@ -1,9 +1,14 @@
 import DeleteIcon from '@mui/icons-material/Delete'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import {
+  Box,
   IconButton,
   ImageList,
   ImageListItem,
   ImageListItemBar,
+  Rating,
+  Typography,
 } from '@mui/material'
 import Layout from 'components/Layout'
 import { NextPage } from 'next'
@@ -20,7 +25,21 @@ const FavoritesPage: NextPage = () => {
 
   return (
     <Layout title="お気に入り一覧">
-      <h1>お気に入り一覧</h1>
+      <Box textAlign="center">
+        <h1>お気に入り一覧</h1>
+        <Typography component="legend">残お気に入り体力</Typography>
+        <Rating
+          defaultValue={2}
+          max={10}
+          getLabelText={(value: number) =>
+            `${value} Heart${value !== 1 ? 's' : ''}`
+          }
+          icon={<FavoriteIcon fontSize="inherit" />}
+          emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+          style={{ color: '#ff3d47' }}
+          readOnly
+        />
+      </Box>
 
       <Suspense fallback={<div>Loading...</div>}>
         <ImageList sx={{ width: '100%' }}>
